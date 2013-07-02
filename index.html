@@ -1,0 +1,113 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Superelipse</title>
+	<style>
+		body {
+			background:url(icon.png) top left no-repeat;
+		}
+		#canvas {
+			background:url(superellipse.jpg) center center;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="c" widt="800" height="800" ></canvas>
+
+	<script>
+
+		(function(){
+		var extend = {
+		    // Circle methods
+		     // circle:function(aX, aY, aDiameter){
+		     //     this.ellipse(aX, aY, aDiameter, aDiameter);
+		     // },
+		     // fillCircle:function(aX, aY, aDiameter){
+		     //     this.beginPath();
+		     //     this.circle(aX, aY, aDiameter);
+		     //     this.fill();
+		     // },
+		     // strokeCircle:function(aX, aY, aDiameter){
+		     //     this.beginPath();
+		     //     this.circle(aX, aY, aDiameter);
+		     //     this.stroke();
+		     // },
+		     // // Ellipse methods
+		     // ellipse:function(aX, aY, aWidth, aHeight){
+		     //     var hB = (aWidth / 2) * .5522848,
+		     //         vB = (aHeight / 2) * .5522848,
+		     //         eX = aX + aWidth,
+		     //         eY = aY + aHeight,
+		     //         mX = aX + aWidth / 2,
+		     //         mY = aY + aHeight / 2;
+		     //     this.moveTo(aX, mY);
+		     //     this.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX, aY);
+		     //     this.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY);
+		     //     this.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX, eY);
+		     //     this.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY);
+		     //     this.closePath();
+		     // },
+		     // fillEllipse:function(aX, aY, aWidth, aHeight){
+		     //     this.beginPath();
+		     //     this.ellipse(aX, aY, aWidth, aHeight);
+		     //     this.fill();
+		     // },
+		     // strokeEllipse:function(aX, aY, aWidth, aHeight){
+		     //     this.beginPath();
+		     //     this.ellipse(aX, aY, aWidth, aHeight);
+		     //     this.stroke();
+		     // },
+		    // Superellipse methods
+		    superellipse:function(aX, aY, aWidth, aHeight, cpd){
+		        var hB = (aWidth / cpd) * .5522848,
+		            vB = (aHeight / cpd) * .5522848,
+		            eX = aX + aWidth,
+		            eY = aY + aHeight,
+		            mX = aX + aWidth / 2,
+		            mY = aY + aHeight / 2,
+		            space = aWidth/4;
+		        this.moveTo(aX, mY);
+		        this.lineTo(aX, mY-space);
+		        this.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX-space, aY);
+		        this.lineTo(mX+space, aY);
+		        this.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY-space);
+		        this.lineTo(eX, mY+space);
+		        this.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX+space, eY);
+		        this.lineTo(mX-space, eY);
+		        this.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY+space);
+		        this.lineTo(aX, mY+space);
+		        this.closePath();
+		    },
+		    fillSuperellipse:function(aX, aY, aWidth, aHeight, cpd){
+		        this.beginPath();
+		        this.superellipse(aX, aY, aWidth, aHeight, cpd);
+		        this.fill();
+		    },
+		    strokeSuperellipse:function(aX, aY, aWidth, aHeight, cpd){
+		        this.beginPath();
+		        this.superellipse(aX, aY, aWidth, aHeight, cpd);
+		        this.stroke();
+		    }
+		};
+		for(var key in extend)
+		    CanvasRenderingContext2D.prototype[key] = extend[key];
+		if(!this.G_vmlCanvasManager)
+		    G_vmlCanvasManager = {init:function(){}, initElement:function(el){return el}};
+		})();
+
+		var canvas = document.getElementById('c');
+		canvas.width = 800;
+		canvas.height = 800;
+		var ctx = canvas.getContext('2d');
+		var red = 'rgba(255, 0, 0, 0.5)';
+		var black = '#000';
+		ctx.fillStyle = black;
+		var size = 121;
+		ctx.fillSuperellipse(24.5, 41.5, size, size, 1.36);
+
+
+
+
+	</script>
+</body>
+</html>
