@@ -15,75 +15,35 @@
 	<canvas id="c" widt="800" height="800" ></canvas>
 
 	<script>
-
+		// Mathias Stav Mit Style License
+		// Based upon Andrea Giammarchi's circle and ellipse functions
 		(function(){
 		var extend = {
-		    // Circle methods
-		     // circle:function(aX, aY, aDiameter){
-		     //     this.ellipse(aX, aY, aDiameter, aDiameter);
-		     // },
-		     // fillCircle:function(aX, aY, aDiameter){
-		     //     this.beginPath();
-		     //     this.circle(aX, aY, aDiameter);
-		     //     this.fill();
-		     // },
-		     // strokeCircle:function(aX, aY, aDiameter){
-		     //     this.beginPath();
-		     //     this.circle(aX, aY, aDiameter);
-		     //     this.stroke();
-		     // },
-		     // // Ellipse methods
-		     // ellipse:function(aX, aY, aWidth, aHeight){
-		     //     var hB = (aWidth / 2) * .5522848,
-		     //         vB = (aHeight / 2) * .5522848,
-		     //         eX = aX + aWidth,
-		     //         eY = aY + aHeight,
-		     //         mX = aX + aWidth / 2,
-		     //         mY = aY + aHeight / 2;
-		     //     this.moveTo(aX, mY);
-		     //     this.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX, aY);
-		     //     this.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY);
-		     //     this.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX, eY);
-		     //     this.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY);
-		     //     this.closePath();
-		     // },
-		     // fillEllipse:function(aX, aY, aWidth, aHeight){
-		     //     this.beginPath();
-		     //     this.ellipse(aX, aY, aWidth, aHeight);
-		     //     this.fill();
-		     // },
-		     // strokeEllipse:function(aX, aY, aWidth, aHeight){
-		     //     this.beginPath();
-		     //     this.ellipse(aX, aY, aWidth, aHeight);
-		     //     this.stroke();
-		     // },
-		    // Superellipse methods
-		    superellipse:function(aX, aY, aWidth, aHeight, cpd){
-		        var hB = (aWidth / cpd) * .5522848,
+		    // curvedOctagon methods
+		    curvedOctagon:function(aX, aY, aWidth, aHeight, cpd, bts){
+		        var hB = (aWidth / cpd) * .5522848, //the curve point offset
 		            vB = (aHeight / cpd) * .5522848,
 		            eX = aX + aWidth,
 		            eY = aY + aHeight,
 		            mX = aX + aWidth / 2,
 		            mY = aY + aHeight / 2,
 		            space = aWidth/4;
-		        this.moveTo(aX, mY);
-		        this.lineTo(aX, mY-space);
-		        this.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX-space, aY);
-		        this.lineTo(mX+space, aY);
-		        this.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY-space);
-		        this.lineTo(eX, mY+space);
-		        this.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX+space, eY);
-		        this.lineTo(mX-space, eY);
-		        this.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY+space);
-		        this.lineTo(aX, mY+space);
-		        this.closePath();
+		       	this.moveTo(aX, mY); //This is left
+		        this.lineTo(aX, mY-space); //A bit up
+		        this.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX-space, aY); //make a curve to top
+		        this.lineTo(mX+space, aY); //Move a bit right
+		        this.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY-space); //Curve to the right
+		        this.lineTo(eX, mY+space); //Move a bot down
+		        this.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX+space, eY); //Curve to the bottom
+		        this.lineTo(mX-space, eY); //Move a bit left
+		        this.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY+space); //Curve to the left
 		    },
-		    fillSuperellipse:function(aX, aY, aWidth, aHeight, cpd){
+		    fillCurvedOctagon:function(aX, aY, aWidth, aHeight, cpd){
 		        this.beginPath();
-		        this.superellipse(aX, aY, aWidth, aHeight, cpd);
+		        this.curvedOctagon(aX, aY, aWidth, aHeight, cpd);
 		        this.fill();
 		    },
-		    strokeSuperellipse:function(aX, aY, aWidth, aHeight, cpd){
+		    strokeCurvedOctagon:function(aX, aY, aWidth, aHeight, cpd){
 		        this.beginPath();
 		        this.superellipse(aX, aY, aWidth, aHeight, cpd);
 		        this.stroke();
@@ -102,8 +62,9 @@
 		var red = 'rgba(255, 0, 0, 0.5)';
 		var black = '#000';
 		ctx.fillStyle = black;
+		
 		var size = 121;
-		ctx.fillSuperellipse(24.5, 41.5, size, size, 1.36);
+		ctx.fillCurvedOctagon(24.5, 41.5, size, size, size/89, true);
 
 
 
